@@ -16,7 +16,9 @@ with sync_playwright() as p:
  second=sentence.inner_text();assert first!=second;assert not answer.is_visible()
  page.keyboard.press('ArrowLeft');page.wait_for_timeout(450);assert sentence.inner_text()==first
  page.keyboard.press('ArrowRight');page.wait_for_timeout(450);assert sentence.inner_text()==second
- page.reload();assert sentence.inner_text()!=second
+ saved=page.evaluate('localStorage.getItem("mudan-bungakusho:history:v1")')
+ page.reload();assert sentence.inner_text()==second
+ assert page.evaluate('localStorage.getItem("mudan-bungakusho:history:v1")')==saved
  # Synthetic pointer gestures exercise axis classification and pointer state.
  def swipe(dx,dy=0):
   sentence.dispatch_event('pointerdown',{'pointerId':1,'isPrimary':True,'button':0,'clientX':240,'clientY':340})

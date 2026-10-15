@@ -4,7 +4,8 @@ import { next, previous, restore } from './history';
 const key='mudan-bungakusho:history:v1', ids=published.map(s=>s.id);
 let saved:string|null=null;
 try{saved=localStorage.getItem(key);}catch{}
-let history=next(restore(saved,ids),ids), opened=false, busy=false, suppressClick=false;
+const restored=restore(saved,ids);
+let history=restored.cursor>=0?restored:next(restored,ids), opened=false, busy=false, suppressClick=false;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 document.querySelector('#app')!.innerHTML=`<header><h1>無断文学賞</h1><span class="header-note" aria-hidden="true">一文を、そのまま。</span></header><main><div class="stage"><article class="card"><button class="sentence" aria-expanded="false" aria-controls="answer"><span class="text"></span></button><section id="answer" hidden><div class="answer-top"><span>本来の文脈</span><button class="close" aria-label="答え合わせを閉じる">閉じる ×</button></div><p class="context"></p><a target="_blank" rel="noopener noreferrer"><span class="source"></span><span aria-hidden="true"> ↗</span><span class="sr-only">の元記事を開く（新しいタブ）</span></a></section></article></div><p class="hint">一文をタップして、出典をひらく</p></main><footer><nav aria-label="標本の移動"><button class="prev" aria-label="前の標本へ"><span aria-hidden="true">←</span> 前の一文</button><span class="swipe-hint">左右にスワイプ</span><button class="next" aria-label="次の標本へ">次の一文 <span aria-hidden="true">→</span></button></nav></footer><div class="sr-only" role="status" aria-live="polite" id="status"></div>`;
 const $=<T extends HTMLElement>(s:string)=>document.querySelector<T>(s)!;
