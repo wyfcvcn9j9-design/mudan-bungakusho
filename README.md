@@ -71,7 +71,7 @@ localStorageの `mudan-bungakusho:history:v1` に既読IDと直近500件の表�
 - 履歴ロジックのテスト成功（ランダム初期表示、未読優先、前後履歴、再読込、破損データ、追加・削除・空データ）。
 - Chromiumで390×844と1440×900を確認。本文の開閉、リンク、前後ボタン、矢印キー、再読込、横・縦ジェスチャー、動き軽減、横はみ出しとJSエラーなしを確認。
 - iPhone Safari実機は未検証。
-- この環境にはSites公開ヘルパーがインストールされていないため、ホスティングへの配置は未実施。
+- GitHub Pagesへの公開成功。公開URLでHTTPS 200応答とChromiumでの操作を確認済み。
 
 ## GitHub Pagesの自動公開設定
 
@@ -80,3 +80,22 @@ localStorageの `mudan-bungakusho:history:v1` に既読IDと直近500件の表�
 初回のみ、GitHubのリポジトリで Settings → Pages → Build and deployment → Source を **GitHub Actions** に設定します。無料プランの場合は公開リポジトリを使用します。URLはActionsのdeployジョブ、またはSettings → Pagesに表示されます。
 
 以降は `src/specimens.ts` などを修正し、mainへコミット・pushするだけです。GitHub上でファイルを編集してCommit changesしても自動公開されます。Actionsが緑の成功表示になってからSafariを再読み込みしてください。
+
+
+## 稼働中のサイトと更新
+
+- 公開URL: https://wyfcvcn9j9-design.github.io/mudan-bungakusho/
+- ソース: https://github.com/wyfcvcn9j9-design/mudan-bungakusho
+- デプロイ状況: https://github.com/wyfcvcn9j9-design/mudan-bungakusho/actions
+
+iPhoneのSafariで公開URLを開き、本文タップで開閉、左右スワイプで前後移動を確認できます。再読み込み後も履歴は同じブラウザに保存されます。
+
+更新はGitHub上で対象ファイルを編集してmainへCommit changesするか、ローカルで以下を実行してください。
+
+```sh
+git add .
+git commit -m "Update specimens"
+git push origin main
+```
+
+ActionsのDeploy to GitHub Pagesが成功すると反映されます。反映に数分かかる場合があります。デザイン・アプリの実装コードは公開作業で変更していません。
